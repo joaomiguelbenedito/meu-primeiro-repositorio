@@ -1,0 +1,418 @@
+/* ==========================================================================
+   CONFIGURAÇÕES GERAIS E FONTES
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000;
+    color: #dcdcdc;
+    font-family: 'Courier Prime', monospace;
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Base de opacidade para o conteúdo respirar */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    position: relative;
+    z-index: 10;
+}
+
+/* ==========================================================================
+   EFEITOS ATMOSFÉRICOS (BACKGROUND)
+   ========================================================================== */
+
+/* Container de Estrelas */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Estilo individual de cada estrela (geradas via JavaScript) */
+.star {
+    position: absolute;
+    background-color: #ffffff;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: moveStar linear infinite;
+}
+
+@keyframes moveStar {
+    0% {
+        transform: translateY(0);
+        opacity: 0.2;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh);
+        opacity: 0.2;
+    }
+}
+
+/* Névoa animada */
+.fog {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(20,20,20,0.4) 0%, transparent 70%);
+    z-index: 2;
+    opacity: 0.6;
+    animation: moveFog 30s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes moveFog {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Partículas de Poeira */
+.dust-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.dust {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    animation: floatDust linear infinite;
+}
+
+@keyframes floatDust {
+    0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+    50% { opacity: 0.4; }
+    100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
+}
+
+/* Flash de Luz Aleatório */
+.flash-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.flash-active {
+    animation: suddenFlash 0.15s ease-out;
+}
+
+@keyframes suddenFlash {
+    0% { opacity: 0.7; }
+    100% { opacity: 0; }
+}
+
+/* ==========================================================================
+   EFEITO CRT (TV ANTIGA)
+   ========================================================================== */
+.crt-effect::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+    z-index: 99;
+    background-size: 100% 4px, 6px 100%;
+    pointer-events: none;
+}
+
+/* Tremor na tela */
+.shake-active {
+    animation: screenShake 0.3s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes screenShake {
+    10%, 90% { transform: translate3d(-1px, 1px, 0); }
+    20%, 80% { transform: translate3d(2px, -1px, 0); }
+    30%, 50%, 70% { transform: translate3d(-3px, 2px, 0); }
+    40%, 60% { transform: translate3d(3px, -2px, 0); }
+}
+
+/* ==========================================================================
+   CABEÇALHO & GLITCH
+   ========================================================================== */
+.hero {
+    text-align: center;
+    padding: 60px 0 30px;
+}
+
+.glitch-title {
+    font-family: 'Special Elite', cursive;
+    font-size: 2.5rem;
+    color: #fff;
+    position: relative;
+    text-transform: uppercase;
+    line-height: 1.2;
+    letter-spacing: 2px;
+}
+
+.subtitle-main {
+    color: #8b0000;
+    text-shadow: 0 0 10px rgba(139, 0, 0, 0.6);
+}
+
+.glitch-active {
+    animation: titleGlitch 0.4s linear infinite;
+    text-shadow: 2px -2px #ff0000, -2px 2px #0000ff;
+}
+
+@keyframes titleGlitch {
+    0% { transform: skew(0deg); }
+    20% { transform: skew(-3deg); }
+    40% { transform: skew(4deg); }
+    60% { transform: skew(-1deg); }
+    80% { transform: skew(2deg); }
+    100% { transform: skew(0deg); }
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #555;
+    margin-top: 15px;
+    font-style: italic;
+    animation: textBlink 4s infinite;
+}
+
+@keyframes textBlink {
+    0%, 90%, 100% { opacity: 1; }
+    92%, 96% { opacity: 0.3; }
+    94% { opacity: 0.8; }
+}
+
+.description {
+    font-size: 0.95rem;
+    max-width: 700px;
+    margin: 30px auto;
+    line-height: 1.6;
+    color: #aaa;
+    text-align: justify;
+}
+
+/* Container do Vídeo da Capa - Tamanho Ajustado para Telemóveis */
+.cover-container {
+    width: 90%;
+    max-width: 360px;
+    height: 180px;
+    margin: 20px auto;
+    border: 2px solid #333;
+    background: #000;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
+    transition: border-color 0.5s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.cover-container:hover {
+    border-color: #8b0000;
+}
+
+.cover-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Botão de Mutar/Desmutar sobreposto ao vídeo */
+.btn-mute {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(10, 10, 10, 0.85);
+    color: #ff3333;
+    border: 1px solid #8b0000;
+    padding: 6px 12px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.75rem;
+    font-weight: bold;
+    cursor: pointer;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    z-index: 20;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 8px rgba(139, 0, 0, 0.5);
+}
+
+.btn-mute:hover {
+    background: #8b0000;
+    color: #fff;
+    box-shadow: 0 0 12px rgba(255, 0, 0, 0.9);
+}
+
+
+/* Botão de Download */
+.btn-download {
+    display: inline-block;
+    text-decoration: none;
+    background: #0a0a0a;
+    color: #555;
+    border: 1px solid #400000;
+    padding: 15px 40px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    letter-spacing: 2px;
+    position: relative;
+    outline: none;
+    box-shadow: 0 0 15px rgba(139, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    animation: redPulse 2.5s infinite alternate; 
+}
+
+.btn-download:hover {
+    background: #150000;
+    transform: scale(1.03);
+}
+
+@keyframes redPulse {
+    0% {
+        box-shadow: 0 0 5px rgba(139, 0, 0, 0.3), inset 0 0 5px rgba(139, 0, 0, 0.1);
+        color: #888;
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.8), inset 0 0 10px rgba(139, 0, 0, 0.5);
+        color: #ff3333;
+        border-color: #ff0000;
+    }
+}
+
+/* ==========================================================================
+   SEÇÕES DO SITE
+   ========================================================================== */
+.divider {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #333, transparent);
+    margin: 40px 0;
+}
+
+.section {
+    padding: 20px 0;
+    text-align: center;
+}
+
+.section h2 {
+    font-family: 'Special Elite', cursive;
+    font-size: 1.6rem;
+    color: #8b0000;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+/* Versão */
+.badge-version {
+    display: inline-block;
+    padding: 8px 20px;
+    background: rgba(20, 0, 0, 0.6);
+    border: 1px solid #8b0000;
+    color: #ff3333;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Novidades */
+.news-list {
+    list-style: none;
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.news-list li {
+    margin-bottom: 12px;
+    position: relative;
+    padding-left: 20px;
+    color: #ccc;
+}
+
+.news-list li::before {
+    content: ">";
+    position: absolute;
+    left: 0;
+    color: #8b0000;
+    font-weight: bold;
+}
+
+/* Créditos */
+.credits-grid {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.credit-card h3 {
+    font-size: 0.9rem;
+    color: #666;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.credit-card p {
+    font-size: 1.1rem;
+    color: #ddd;
+}
+
+/* Rodapé */
+.footer {
+    text-align: center;
+    margin-top: 60px;
+    font-size: 0.8rem;
+    color: #444;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE (MEDIA QUERIES)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .glitch-title {
+        font-size: 1.8rem;
+    }
+    
+    .description {
+        text-align: center;
+        font-size: 0.9rem;
+    }
+
+    .credits-grid {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
